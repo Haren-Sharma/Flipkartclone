@@ -6,7 +6,7 @@ import Feather from "@expo/vector-icons/Feather";
 
 const TabLayout = () => {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "blue", headerShown: false }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: "#510fac", headerShown: false }}>
       <Tabs.Screen
         name="index"
         options={{
