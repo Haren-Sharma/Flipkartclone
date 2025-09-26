@@ -8,32 +8,46 @@ type ProductProps = {
 };
 
 const Product: React.FC<ProductProps> = ({ item }) => {
-  const {setCartProducts}:any=getCartProducts();
+  const { setCartProducts }: any = getCartProducts();
+
   const addProduct = () => {
-    setCartProducts((prev:any)=>[...prev,item])
+    setCartProducts((prev: any) => [...prev, item]);
   };
+
   const deleteProduct = () => {
-    setCartProducts((prev:any)=>{
-      return [...prev].filter(prod=>prod.id===item.id)
-    })
+    setCartProducts((prev: any) =>
+      prev.filter((prod: ProductType) => prod.id !== item.id)
+    );
   };
+
   return (
     <View style={styles.container}>
       <Image source={{ uri: item.images[0] }} style={styles.imageStyle} />
       <Text style={styles.prodCategory}>{item.category.name}</Text>
       <Text>{item.title}</Text>
       <Text>{"$ " + item.price}</Text>
+
       <View style={styles.btnContainer}>
+        {/* Add Button */}
         <Pressable
-          style={{padding:10}}
           onPress={addProduct}
+          style={({ pressed }) => [
+            styles.pressableBtn,
+            pressed && styles.pressedStyle,
+          ]}
         >
           <Text style={styles.btnText}>{"+"}</Text>
         </Pressable>
+
         <Text style={styles.btnText}>Add</Text>
+
+        {/* Delete Button */}
         <Pressable
-          style={{padding:10}}
           onPress={deleteProduct}
+          style={({ pressed }) => [
+            styles.pressableBtn,
+            pressed && styles.pressedStyle,
+          ]}
         >
           <Text style={styles.btnText}>{"-"}</Text>
         </Pressable>
@@ -61,7 +75,7 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     justifyContent: "space-between",
-    alignItems:'center',
+    alignItems: "center",
     flexDirection: "row",
     marginTop: 5,
     borderRadius: 10,
@@ -71,8 +85,11 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 14,
   },
-  onPressed: {
-    opacity: 0.5,
+  pressableBtn: {
+    padding: 10,
+  },
+  pressedStyle: {
+    opacity: 0.2, // 👈 press hone par opacity reduce hogi
   },
 });
 
