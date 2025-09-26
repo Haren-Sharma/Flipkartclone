@@ -42,6 +42,8 @@ const TabLayout = () => {
       <Tabs.Screen
         name="cart"
         options={{
+          title:"Cart",
+          headerShown:true,
           tabBarIcon: ({ color }) => (
             <Ionicons name="cart-outline" color={color} size={24} />
           ),

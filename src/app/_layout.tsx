@@ -1,13 +1,16 @@
 import { Stack } from "expo-router";
+import { ProductsCartProvider } from "../context/ProductsCartContext";
 
 export default function RootLayout() {
   return (
-    <Stack
-      screenOptions={{
-        statusBarHidden: true,
-      }}
-    >
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <ProductsCartProvider>
+      <Stack
+        screenOptions={{
+          statusBarHidden: true,
+        }}
+      >
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </ProductsCartProvider>
   );
 }

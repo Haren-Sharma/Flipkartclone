@@ -1,17 +1,21 @@
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { ProductType } from "../utilities/types";
+import { getCartProducts } from "../context/ProductsCartContext";
 
 type ProductProps = {
   item: ProductType;
 };
 
 const Product: React.FC<ProductProps> = ({ item }) => {
+  const {setCartProducts}:any=getCartProducts();
   const addProduct = () => {
-    console.log("OnPress add")
+    setCartProducts((prev:any)=>[...prev,item])
   };
   const deleteProduct = () => {
-    console.log("OnPress delete")
+    setCartProducts((prev:any)=>{
+      return [...prev].filter(prod=>prod.id===item.id)
+    })
   };
   return (
     <View style={styles.container}>
