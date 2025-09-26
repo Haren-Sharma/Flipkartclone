@@ -1,11 +1,32 @@
-import { View, StyleSheet, Pressable, TextInput } from "react-native";
-import React, { useState } from "react";
-import CategoryComponent from "@/src/components/CategoryComponent";
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  TextInput,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import Category from "@/src/components/Category";
 import { Categories } from "@/src/utilities/mockData";
+import { ProductType } from "@/src/utilities/types";
+import Product from "@/src/components/Product";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState<Number>(0);
-  const [inputValue,setInputValue]=useState("");
+  const [inputValue, setInputValue] = useState<string>("");
+  const [products, setProducts] = useState<ProductType[]>([]);
+
+  const getProducts = async () => {
+    const raw = await fetch("https://api.escuelajs.co/api/v1/products");
+    const data = await raw.json();
+    setProducts(data);
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <View style={styles.container}>
       {/*
@@ -23,7 +44,7 @@ const Home = () => {
                   setSelectedCategory(i);
                 }}
               >
-                <CategoryComponent
+                <Category
                   selected={selectedCategory === i}
                   key={category.name}
                   category={category}
@@ -37,13 +58,23 @@ const Home = () => {
           style={styles.inputBox}
           placeholder="Type Something To Search"
           value={inputValue}
-          onChangeText={(text)=>setInputValue(text)}
+          onChangeText={(text) => setInputValue(text)}
         />
       </View>
       {/*
         Product Listing
       */}
-      
+      <FlatList
+        keyExtractor={(item) => item.id.toString()}
+        ListEmptyComponent={() => (
+          <ActivityIndicator style={{ marginTop: 20 }} color="red" size={30} />
+        )}
+        data={products}
+        renderItem={({ item }) => {
+          return <Product item={item} />;
+        }}
+        numColumns={2}
+      />
     </View>
   );
 };
@@ -69,7 +100,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 15,
     fontSize: 16,
-    fontStyle:"italic"
+    fontStyle: "italic",
   },
 });
 

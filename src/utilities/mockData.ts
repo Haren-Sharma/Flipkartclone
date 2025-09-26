@@ -1,6 +1,6 @@
-import { Category } from "./types";
+import { CategoryType } from "./types";
 
-export const Categories: Category[] = [
+export const Categories: CategoryType[] = [
   {
     uri: "https://images.icon-icons.com/729/PNG/512/flipkart_icon-icons.com_62718.png",
     name: "Flipkart",
